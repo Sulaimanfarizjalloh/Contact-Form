@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+<center>
+		<h4 class="send-notification"></h4>
+		<form id="myForm">
+		<h2>Send Email</h2>
+
+		<label>Name</label>
+		<input id="name" type="text" placeholder="Enter Name">
+		<br><br>
+		<label>Email</label>
+		<input id="email" type="text" placeholder="Enter your email">
+		<br><br>
+		<label>Subject</label>
+		<input id="subject" type="text" placeholder="Enter subject here">
+		<br><br>
+		<p>Message</p>
+		<textarea id="body" rows="5" placeholder="Type Message"></textarea>
+		<br><br>
+		<button type="button" onclick="sendEmail()" value="Send an Email">Submit</button>
+	   </form>
+</center>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascrpt">
+		function sendEmail(){
+			var name = $("#name")
+			var email = $("#email")
+			var subject = $("#subject")
+			var body = $("#body")
+
+			if (isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)) {
+				$.ajax({
+					url: 'sendEmail',
+					method: 'POST'
+					dataType: 'json',
+					data:{
+						name: name.val(),
+						email: email.val(),
+						subject: subject.val(),
+						body: body.val()
+					}, success: function(response){
+						$('#myForm')[0].reset();
+						$('.send-notificatio').text("Message sent succesfully".)
+					}
+				})
+			}
+		}
+
+		function isNotEmpty(caller){
+			if(caller.val() == ""){
+				caller.css('border', '')
+				return true;
+			}
+		}
+</script>
+</body>
+</html>
